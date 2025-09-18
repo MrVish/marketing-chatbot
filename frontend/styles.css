@@ -1,0 +1,38 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 0 12px;
+    padding: 16px 20px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    color: #fff
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 1.6rem
+}
+
+.header p {
+    margin: 4px 0 0;
+    opacity: .85
+}
+
+.badge {
+    background: #22c55e;
+    color: #0a0a0a;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-weight: 600
+}
+
+/* Streamlit container polish */
+.block-container {
+    padding-top: 20px;
+}
+
+[data-testid="stSidebar"] {
+    background: #0b1220;
+    color: #eaeef7
+}

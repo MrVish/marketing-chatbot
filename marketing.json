@@ -1,0 +1,373 @@
+[
+    {
+        "table": "curated_pl_marketing_wide_synth",
+        "description": "Daily snapshot table for personal loans marketing and lifecycle at LendingClub-style granularity. Includes application funnel, underwriting, funding, servicing, customer demographics, marketing attribution, and value metrics.",
+        "columns": [
+            {
+                "name": "snapshot_date",
+                "type": "DATE",
+                "description": "Snapshot calendar date (day grain)."
+            },
+            {
+                "name": "customer_id",
+                "type": "VARCHAR(64)",
+                "description": "Unique identifier for the customer."
+            },
+            {
+                "name": "application_id",
+                "type": "VARCHAR(64)",
+                "description": "Unique loan application identifier."
+            },
+            {
+                "name": "loan_id",
+                "type": "VARCHAR(64)",
+                "description": "Loan identifier, populated only if the application was funded."
+            },
+            {
+                "name": "first_touch_channel",
+                "type": "VARCHAR(64)",
+                "description": "Marketing channel where the customer was first engaged (e.g., Paid Search, Social, Email)."
+            },
+            {
+                "name": "first_touch_subchannel",
+                "type": "VARCHAR(64)",
+                "description": "Sub-channel classification (e.g., Brand, Non-Brand, Paid Social)."
+            },
+            {
+                "name": "first_touch_source",
+                "type": "VARCHAR(64)",
+                "description": "Source of the lead (e.g., google, meta, web aggregator)."
+            },
+            {
+                "name": "first_touch_medium",
+                "type": "VARCHAR(64)",
+                "description": "Marketing medium (e.g., cpc, email, organic)."
+            },
+            {
+                "name": "campaign_name",
+                "type": "VARCHAR(128)",
+                "description": "Campaign name through which the customer was acquired."
+            },
+            {
+                "name": "offer_name",
+                "type": "VARCHAR(128)",
+                "description": "Offer variant shown to the customer."
+            },
+            {
+                "name": "attribution_window_days",
+                "type": "INT",
+                "description": "Attribution window in days for linking leads to applications."
+            },
+            {
+                "name": "application_dt",
+                "type": "TIMESTAMP",
+                "description": "Datetime when the loan application was created."
+            },
+            {
+                "name": "app_status",
+                "type": "VARCHAR(24)",
+                "description": "Application status (submitted, approved_not_funded, funded, in_funnel)."
+            },
+            {
+                "name": "preapproved_flag",
+                "type": "BOOLEAN",
+                "description": "Flag indicating whether the customer was pre-approved."
+            },
+            {
+                "name": "bureau_pull_flag",
+                "type": "BOOLEAN",
+                "description": "Indicates whether a credit bureau pull was performed."
+            },
+            {
+                "name": "kyc_pass_flag",
+                "type": "BOOLEAN",
+                "description": "Flag for Know Your Customer (KYC) verification pass."
+            },
+            {
+                "name": "doc_complete_flag",
+                "type": "BOOLEAN",
+                "description": "Flag indicating whether all required documentation was completed."
+            },
+            {
+                "name": "uw_decision",
+                "type": "VARCHAR(24)",
+                "description": "Underwriting decision outcome (approve, decline, conditional)."
+            },
+            {
+                "name": "uw_decision_dt",
+                "type": "TIMESTAMP",
+                "description": "Datetime of underwriting decision."
+            },
+            {
+                "name": "uw_reason_code",
+                "type": "VARCHAR(64)",
+                "description": "Reason code for underwriting decision, if declined."
+            },
+            {
+                "name": "risk_score",
+                "type": "NUMERIC(7,3)",
+                "description": "Internal or external risk score for the applicant."
+            },
+            {
+                "name": "fico_band",
+                "type": "VARCHAR(16)",
+                "description": "FICO score band (e.g., 720-759, 680-719)."
+            },
+            {
+                "name": "fico",
+                "type": "INT",
+                "description": "Customer’s FICO score."
+            },
+            {
+                "name": "dti",
+                "type": "NUMERIC(6,2)",
+                "description": "Debt-to-Income ratio percentage."
+            },
+            {
+                "name": "annual_income",
+                "type": "NUMERIC(14,2)",
+                "description": "Customer’s reported annual income."
+            },
+            {
+                "name": "employment_len_band",
+                "type": "VARCHAR(16)",
+                "description": "Employment length bucket (e.g., <1y, 1-2y, 3-5y)."
+            },
+            {
+                "name": "grade",
+                "type": "VARCHAR(1)",
+                "description": "Loan grade (A–G) assigned by underwriting."
+            },
+            {
+                "name": "subgrade",
+                "type": "VARCHAR(3)",
+                "description": "Loan subgrade (e.g., B3, C5)."
+            },
+            {
+                "name": "requested_amt",
+                "type": "NUMERIC(14,2)",
+                "description": "Requested loan amount."
+            },
+            {
+                "name": "approved_amt",
+                "type": "NUMERIC(14,2)",
+                "description": "Approved loan amount (could be less than requested)."
+            },
+            {
+                "name": "approved_rate",
+                "type": "NUMERIC(7,4)",
+                "description": "Approved interest rate at underwriting stage."
+            },
+            {
+                "name": "term_months",
+                "type": "INT",
+                "description": "Loan term in months (e.g., 36, 60)."
+            },
+            {
+                "name": "purpose_code",
+                "type": "VARCHAR(64)",
+                "description": "Purpose of the loan (e.g., debt_consolidation, credit_card)."
+            },
+            {
+                "name": "funded_flag",
+                "type": "BOOLEAN",
+                "description": "Flag indicating if the loan was successfully funded."
+            },
+            {
+                "name": "funded_dt",
+                "type": "TIMESTAMP",
+                "description": "Datetime when the loan was funded."
+            },
+            {
+                "name": "funded_amt",
+                "type": "NUMERIC(14,2)",
+                "description": "Actual funded loan amount."
+            },
+            {
+                "name": "apr",
+                "type": "NUMERIC(7,4)",
+                "description": "Annual Percentage Rate (APR) on the loan."
+            },
+            {
+                "name": "origination_fee_amt",
+                "type": "NUMERIC(14,2)",
+                "description": "Origination fee charged at disbursement."
+            },
+            {
+                "name": "time_to_yes_minutes",
+                "type": "INT",
+                "description": "Time from application to underwriting decision (minutes)."
+            },
+            {
+                "name": "time_to_fund_minutes",
+                "type": "INT",
+                "description": "Time from underwriting decision to funding (minutes)."
+            },
+            {
+                "name": "principal_outstanding",
+                "type": "NUMERIC(16,2)",
+                "description": "Outstanding principal balance on the loan as of snapshot date."
+            },
+            {
+                "name": "interest_accrued",
+                "type": "NUMERIC(16,2)",
+                "description": "Interest accrued up to snapshot date."
+            },
+            {
+                "name": "principal_paid",
+                "type": "NUMERIC(16,2)",
+                "description": "Principal paid to date."
+            },
+            {
+                "name": "interest_paid",
+                "type": "NUMERIC(16,2)",
+                "description": "Interest paid to date."
+            },
+            {
+                "name": "fees_paid",
+                "type": "NUMERIC(16,2)",
+                "description": "Fees paid to date."
+            },
+            {
+                "name": "days_past_due",
+                "type": "INT",
+                "description": "Number of days the loan is past due."
+            },
+            {
+                "name": "dpd_bucket",
+                "type": "VARCHAR(8)",
+                "description": "Delinquency bucket (0, 30, 60, 90+)."
+            },
+            {
+                "name": "chargeoff_flag",
+                "type": "BOOLEAN",
+                "description": "True if loan charged-off as of snapshot date."
+            },
+            {
+                "name": "prepay_flag",
+                "type": "BOOLEAN",
+                "description": "True if loan prepaid as of snapshot date."
+            },
+            {
+                "name": "age_band",
+                "type": "VARCHAR(16)",
+                "description": "Customer age band."
+            },
+            {
+                "name": "income_band",
+                "type": "VARCHAR(16)",
+                "description": "Customer income band."
+            },
+            {
+                "name": "risk_segment",
+                "type": "VARCHAR(32)",
+                "description": "Risk segmentation category (Prime, Near-Prime, Sub-Prime)."
+            },
+            {
+                "name": "primacy_flag",
+                "type": "BOOLEAN",
+                "description": "Flag indicating if customer is a primary relationship holder."
+            },
+            {
+                "name": "digital_active_flag",
+                "type": "BOOLEAN",
+                "description": "Flag if customer is digitally active."
+            },
+            {
+                "name": "device_type",
+                "type": "VARCHAR(32)",
+                "description": "Device used by customer (mobile, desktop, tablet)."
+            },
+            {
+                "name": "segment_name",
+                "type": "VARCHAR(128)",
+                "description": "Marketing or risk segment name."
+            },
+            {
+                "name": "purpose_name",
+                "type": "VARCHAR(64)",
+                "description": "Human-readable loan purpose."
+            },
+            {
+                "name": "country",
+                "type": "VARCHAR(64)",
+                "description": "Customer country."
+            },
+            {
+                "name": "state",
+                "type": "VARCHAR(64)",
+                "description": "Customer state."
+            },
+            {
+                "name": "city",
+                "type": "VARCHAR(128)",
+                "description": "Customer city."
+            },
+            {
+                "name": "zip",
+                "type": "VARCHAR(16)",
+                "description": "Customer ZIP or postal code."
+            },
+            {
+                "name": "mkt_cost_month",
+                "type": "NUMERIC(16,2)",
+                "description": "Monthly marketing spend for this channel/campaign."
+            },
+            {
+                "name": "mkt_cost_daily_alloc",
+                "type": "NUMERIC(16,2)",
+                "description": "Daily allocation of monthly marketing spend."
+            },
+            {
+                "name": "revenue_daily",
+                "type": "NUMERIC(16,2)",
+                "description": "Daily revenue recognized (interest + fees)."
+            },
+            {
+                "name": "servicing_cost_daily",
+                "type": "NUMERIC(16,2)",
+                "description": "Daily cost of servicing allocated."
+            },
+            {
+                "name": "ltv_to_date",
+                "type": "NUMERIC(16,2)",
+                "description": "Cumulative lifetime value as of snapshot date."
+            },
+            {
+                "name": "is_lead_day",
+                "type": "BOOLEAN",
+                "description": "True if lead event occurred on snapshot date."
+            },
+            {
+                "name": "is_apply_day",
+                "type": "BOOLEAN",
+                "description": "True if application created on snapshot date."
+            },
+            {
+                "name": "is_decision_day",
+                "type": "BOOLEAN",
+                "description": "True if underwriting decision made on snapshot date."
+            },
+            {
+                "name": "is_fund_day",
+                "type": "BOOLEAN",
+                "description": "True if funding occurred on snapshot date."
+            },
+            {
+                "name": "approval_rate_flag",
+                "type": "BOOLEAN",
+                "description": "True if approval event occurred on snapshot date."
+            },
+            {
+                "name": "funded_rate_flag",
+                "type": "BOOLEAN",
+                "description": "True if funding event occurred on snapshot date."
+            },
+            {
+                "name": "record_loaded_at",
+                "type": "TIMESTAMP",
+                "description": "Audit column: timestamp when record was loaded."
+            }
+        ]
+    }
+]
