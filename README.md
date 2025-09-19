@@ -22,18 +22,30 @@ pip install -r requirements.txt
 
 ### 2. Set up Environment
 
-Copy the configuration template and add your OpenAI API key:
+#### Option A: Guided Setup (Recommended)
+```bash
+python setup_env.py
+```
+This interactive script will help you choose between OpenAI and Azure OpenAI and create the `.env` file with the correct `LLM_PROVIDER` setting.
+
+#### Option B: Manual Setup
+Copy the configuration template and add your API keys:
 
 ```bash
-# Copy config_template.txt to .env and update with your values
-# Choose your LLM provider: "openai" or "azure"
-LLM_PROVIDER=openai
+cp config_template.txt .env
+# Then edit .env with your actual values
+```
 
-# For OpenAI API
+Your `.env` file should contain:
+```env
+# REQUIRED: Choose your LLM provider first!
+LLM_PROVIDER=openai  # or "azure" for Azure OpenAI
+
+# For OpenAI API (when LLM_PROVIDER=openai)
 OPENAI_API_KEY=your_openai_api_key_here
 LLM_MODEL=gpt-4o-mini
 
-# For Azure OpenAI (if using LLM_PROVIDER=azure)
+# For Azure OpenAI (when LLM_PROVIDER=azure)
 AZURE_OPENAI_API_KEY=your_azure_openai_api_key_here
 AZURE_OPENAI_ENDPOINT=https://your-resource-name.openai.azure.com/
 AZURE_OPENAI_DEPLOYMENT=gpt-4o-mini
@@ -42,6 +54,11 @@ AZURE_OPENAI_API_VERSION=2024-02-15-preview
 DATABASE_URL=sqlite:///marketing.db
 ALLOWED_ORIGINS=*
 API_BASE=http://localhost:8000
+```
+
+#### Test Your Configuration
+```bash
+python test_llm_init.py
 ```
 
 #### Azure OpenAI Configuration

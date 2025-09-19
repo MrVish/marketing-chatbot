@@ -48,15 +48,44 @@ def get_llm_instance(temperature: float = 0.1):
     try:
         if settings.is_azure_openai:
             from langchain_openai import AzureChatOpenAI
+            import os
             
             print(f"🔷 Using Azure OpenAI with deployment: {settings.azure_openai_deployment}")
-            return AzureChatOpenAI(
-                azure_endpoint=settings.azure_openai_endpoint,
-                azure_deployment=settings.azure_openai_deployment,
-                api_version=settings.azure_openai_api_version,
-                api_key=settings.azure_openai_api_key,
-                temperature=temperature
-            )
+            print(f"🔷 Endpoint: {settings.azure_openai_endpoint}")
+            print(f"🔷 API Version: {settings.azure_openai_api_version}")
+            
+            # Set environment variable for Azure OpenAI (some versions require this)
+            os.environ["AZURE_OPENAI_API_KEY"] = settings.azure_openai_api_key
+            os.environ["AZURE_OPENAI_ENDPOINT"] = settings.azure_openai_endpoint
+            
+            # Try different parameter combinations for Azure OpenAI
+            try:
+                # Method 1: Using openai_api_key parameter (newer versions)
+                return AzureChatOpenAI(
+                    azure_endpoint=settings.azure_openai_endpoint,
+                    azure_deployment=settings.azure_openai_deployment,
+                    openai_api_version=settings.azure_openai_api_version,
+                    openai_api_key=settings.azure_openai_api_key,
+                    temperature=temperature
+                )
+            except Exception as e1:
+                print(f"🔷 Method 1 failed: {e1}")
+                try:
+                    # Method 2: Using api_key parameter (older versions)
+                    return AzureChatOpenAI(
+                        azure_endpoint=settings.azure_openai_endpoint,
+                        azure_deployment=settings.azure_openai_deployment,
+                        api_version=settings.azure_openai_api_version,
+                        api_key=settings.azure_openai_api_key,
+                        temperature=temperature
+                    )
+                except Exception as e2:
+                    print(f"🔷 Method 2 failed: {e2}")
+                    # Method 3: Environment variables only
+                    return AzureChatOpenAI(
+                        azure_deployment=settings.azure_openai_deployment,
+                        temperature=temperature
+                    )
             
         elif settings.is_openai_configured:
             from langchain_openai import ChatOpenAI
@@ -70,8 +99,15 @@ def get_llm_instance(temperature: float = 0.1):
             
         else:
             print("❌ No LLM provider configured. Please set either OpenAI or Azure OpenAI credentials.")
+            print(f"📋 Current config - Provider: {settings.llm_provider}")
+            print(f"📋 OpenAI key configured: {bool(settings.openai_api_key)}")
+            print(f"📋 Azure key configured: {bool(settings.azure_openai_api_key)}")
+            print(f"📋 Azure endpoint configured: {bool(settings.azure_openai_endpoint)}")
             return None
             
     except Exception as e:
         print(f"❌ Error initializing LLM: {e}")
+        print(f"📋 Provider: {settings.llm_provider}")
+        print(f"📋 Azure configured: {settings.is_azure_openai}")
+        print(f"📋 OpenAI configured: {settings.is_openai_configured}")
         return None

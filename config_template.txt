@@ -1,7 +1,11 @@
-# Copy this to .env and update with your actual values
+# ===== INSTRUCTIONS =====
+# 1. Copy this file to create ".env" in the same directory
+# 2. Update the values below with your actual API keys and settings
+# 3. IMPORTANT: Choose your LLM provider first (openai or azure)
 
 # ===== LLM PROVIDER CONFIGURATION =====
-# Choose your LLM provider: "openai" or "azure"
+# REQUIRED: Choose your LLM provider: "openai" or "azure"
+# This determines which API will be used for all LLM operations
 LLM_PROVIDER=openai
 
 # ===== OPENAI CONFIGURATION =====
@@ -11,10 +15,17 @@ LLM_MODEL=gpt-4o-mini
 
 # ===== AZURE OPENAI CONFIGURATION =====
 # Azure OpenAI API (use when LLM_PROVIDER=azure)
+# Get these values from your Azure OpenAI resource in the Azure portal
 AZURE_OPENAI_API_KEY=your_azure_openai_api_key_here
 AZURE_OPENAI_ENDPOINT=https://your-resource-name.openai.azure.com/
 AZURE_OPENAI_DEPLOYMENT=gpt-4o-mini
 AZURE_OPENAI_API_VERSION=2024-02-15-preview
+
+# Example for Azure:
+# AZURE_OPENAI_API_KEY=1234567890abcdef1234567890abcdef
+# AZURE_OPENAI_ENDPOINT=https://my-openai-resource.openai.azure.com/
+# AZURE_OPENAI_DEPLOYMENT=gpt-4o-mini-deployment
+# AZURE_OPENAI_API_VERSION=2024-02-15-preview
 
 # ===== OTHER SETTINGS =====
 DATABASE_URL=sqlite:///marketing.db
