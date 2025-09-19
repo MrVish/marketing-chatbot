@@ -54,38 +54,77 @@ def get_llm_instance(temperature: float = 0.1):
             print(f"🔷 Endpoint: {settings.azure_openai_endpoint}")
             print(f"🔷 API Version: {settings.azure_openai_api_version}")
             
-            # Set environment variable for Azure OpenAI (some versions require this)
+            # Disable proxy settings for Azure OpenAI to prevent proxy errors
+            proxy_env_vars = ['HTTP_PROXY', 'HTTPS_PROXY', 'http_proxy', 'https_proxy']
+            original_proxy_values = {}
+            
+            # Store original proxy values and disable them temporarily
+            for var in proxy_env_vars:
+                original_proxy_values[var] = os.environ.get(var)
+                if var in os.environ:
+                    del os.environ[var]
+            
+            # Set NO_PROXY to include Azure OpenAI endpoint
+            azure_domain = settings.azure_openai_endpoint.replace('https://', '').replace('http://', '')
+            os.environ['NO_PROXY'] = f"{azure_domain},*.openai.azure.com,*.azure.com"
+            
+            # Set environment variables for Azure OpenAI (some versions require this)
             os.environ["AZURE_OPENAI_API_KEY"] = settings.azure_openai_api_key
             os.environ["AZURE_OPENAI_ENDPOINT"] = settings.azure_openai_endpoint
+            os.environ["AZURE_OPENAI_API_VERSION"] = settings.azure_openai_api_version
             
-            # Try different parameter combinations for Azure OpenAI
             try:
                 # Method 1: Using openai_api_key parameter (newer versions)
-                return AzureChatOpenAI(
+                llm = AzureChatOpenAI(
                     azure_endpoint=settings.azure_openai_endpoint,
                     azure_deployment=settings.azure_openai_deployment,
                     openai_api_version=settings.azure_openai_api_version,
                     openai_api_key=settings.azure_openai_api_key,
-                    temperature=temperature
+                    temperature=temperature,
+                    # Explicitly disable proxy usage
+                    timeout=60,
+                    max_retries=3
                 )
+                print("✅ Azure OpenAI initialized successfully (Method 1)")
+                return llm
+                
             except Exception as e1:
                 print(f"🔷 Method 1 failed: {e1}")
                 try:
                     # Method 2: Using api_key parameter (older versions)
-                    return AzureChatOpenAI(
+                    llm = AzureChatOpenAI(
                         azure_endpoint=settings.azure_openai_endpoint,
                         azure_deployment=settings.azure_openai_deployment,
                         api_version=settings.azure_openai_api_version,
                         api_key=settings.azure_openai_api_key,
-                        temperature=temperature
+                        temperature=temperature,
+                        timeout=60,
+                        max_retries=3
                     )
+                    print("✅ Azure OpenAI initialized successfully (Method 2)")
+                    return llm
+                    
                 except Exception as e2:
                     print(f"🔷 Method 2 failed: {e2}")
-                    # Method 3: Environment variables only
-                    return AzureChatOpenAI(
-                        azure_deployment=settings.azure_openai_deployment,
-                        temperature=temperature
-                    )
+                    try:
+                        # Method 3: Environment variables only
+                        llm = AzureChatOpenAI(
+                            azure_deployment=settings.azure_openai_deployment,
+                            temperature=temperature,
+                            timeout=60,
+                            max_retries=3
+                        )
+                        print("✅ Azure OpenAI initialized successfully (Method 3)")
+                        return llm
+                    except Exception as e3:
+                        print(f"🔷 Method 3 failed: {e3}")
+                        raise e3
+            
+            finally:
+                # Restore original proxy settings
+                for var, value in original_proxy_values.items():
+                    if value is not None:
+                        os.environ[var] = value
             
         elif settings.is_openai_configured:
             from langchain_openai import ChatOpenAI

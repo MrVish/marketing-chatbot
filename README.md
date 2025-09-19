@@ -163,21 +163,71 @@ Try asking these questions in the chatbot:
 - `GET /health` - Health check
 - Backend runs on port 8000 by default
 
-## Troubleshooting
+## 🛠️ Troubleshooting
 
-### Backend Issues
-- Ensure your OpenAI API key is valid
+### Quick Fixes
+
+**Streamlit Width/Layout Issues:**
+```bash
+# Ensure compatible Streamlit version
+pip install streamlit>=1.28.0,<1.39.0
+```
+
+**Azure OpenAI Proxy/Connection Errors:**
+```bash
+# Run the Azure troubleshooting script
+python fix_azure_issues.py
+```
+
+**LLM Configuration Issues:**
+```bash
+# Test your LLM setup
+python test_llm_init.py
+```
+
+### Common Issues
+
+**1. Streamlit Layout Problems**
+- Clear browser cache and restart Streamlit
+- The app uses `use_container_width=True` for compatibility
+- Page is automatically configured for wide layout
+
+**2. Azure OpenAI Issues**
+- **Proxy Errors**: Run `python fix_azure_issues.py` to automatically fix
+- **Authentication**: Verify credentials match your Azure portal exactly
+- **Network**: App automatically bypasses proxies for Azure domains
+
+**3. Backend Issues**
+- Ensure your OpenAI/Azure API key is valid and has credits
 - Check that the database file exists and is readable
-- Verify all dependencies are installed
+- Verify all dependencies are installed: `pip install -r requirements.txt`
+- Make sure backend is running on port 8001 (not 8000)
 
-### Frontend Issues  
-- Make sure the backend is running on port 8000
-- Check that API_BASE in your .env matches the backend URL
+**4. Frontend Issues**  
+- Check that API_BASE in your .env matches the backend URL (port 8001)
 - Verify Streamlit dependencies are installed
+- Clear browser cache if layout issues persist
 
-### Database Issues
+**5. Database Issues**
 - The database should be in the root directory as `marketing.db`
 - Ensure the database is not locked by other processes
+
+### Azure OpenAI Specific Troubleshooting
+
+**Proxy Errors (even without proxies):**
+1. Run `python fix_azure_issues.py` - automatically fixes proxy issues
+2. Manually clear if needed: `unset HTTP_PROXY HTTPS_PROXY http_proxy https_proxy`
+
+**Authentication Errors:**
+1. Verify Azure OpenAI credentials in Azure portal
+2. Ensure deployment name matches exactly (case-sensitive)
+3. Check endpoint format: `https://your-resource.openai.azure.com/`
+
+**Connection Test:**
+```bash
+python fix_azure_issues.py  # Comprehensive Azure testing
+python test_llm_init.py     # General LLM configuration test
+```
 
 ## Development
 

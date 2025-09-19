@@ -277,12 +277,12 @@ with st.sidebar:
     st.markdown("**⚡ Quick Presets**")
     preset_col1, preset_col2 = st.columns(2)
     with preset_col1:
-        if st.button("📊 This Month", width="stretch"):
+        if st.button("📊 This Month", use_container_width=True):
             st.session_state.filter_date_from = datetime(2025, 9, 1).date()
             st.session_state.filter_date_to = datetime(2025, 9, 18).date()
             st.rerun()
     with preset_col2:
-        if st.button("📈 Last 30 Days", width="stretch"):
+        if st.button("📈 Last 30 Days", use_container_width=True):
             st.session_state.filter_date_from = datetime(2025, 8, 19).date()
             st.session_state.filter_date_to = datetime(2025, 9, 18).date()
             st.rerun()
@@ -308,7 +308,7 @@ with st.sidebar:
     """)
     
     # Apply filters button
-    if st.button("🔄 Apply Filters", width="stretch", help="Apply current filters to all data views", type="primary"):
+    if st.button("🔄 Apply Filters", use_container_width=True, help="Apply current filters to all data views", type="primary"):
         st.session_state.active_filters = filters.copy()
         st.session_state.filters_applied = True
         st.success("✅ Filters applied successfully!")
@@ -372,11 +372,11 @@ with st.sidebar:
     st.markdown("**🚀 Quick Actions**")
     action_col1, action_col2 = st.columns(2)
     with action_col1:
-        if st.button("🗑️ Clear Chat", width="stretch"):
+        if st.button("🗑️ Clear Chat", use_container_width=True):
             st.session_state.history = []
             st.rerun()
     with action_col2:
-        if st.button("🔄 Reset Filters", width="stretch"):
+        if st.button("🔄 Reset Filters", use_container_width=True):
             st.session_state.filter_segment = "All Segments"
             st.session_state.filter_channel = "All Channels" 
             st.session_state.filter_date_from = datetime(2025, 8, 1).date()
@@ -529,7 +529,7 @@ with tab1:
                                 showlegend=False
                             )
                             fig_revenue.update_traces(line_width=3)
-                            st.plotly_chart(fig_revenue, width="stretch")
+                            st.plotly_chart(fig_revenue, use_container_width=True)
                         
                         st.markdown('</div>', unsafe_allow_html=True)
                     
@@ -554,7 +554,7 @@ with tab1:
                                 title_font_size=16,
                                 showlegend=False
                             )
-                            st.plotly_chart(fig_roas, width="stretch")
+                            st.plotly_chart(fig_roas, use_container_width=True)
                         
                         st.markdown('</div>', unsafe_allow_html=True)
                 
@@ -600,7 +600,7 @@ with tab1:
                                 title_font_size=16,
                                 hovermode="x unified"
                             )
-                            st.plotly_chart(fig_apps, width="stretch")
+                            st.plotly_chart(fig_apps, use_container_width=True)
                         
                         st.markdown('</div>', unsafe_allow_html=True)
                     
@@ -630,7 +630,7 @@ with tab1:
                                 title_font_size=16,
                                 legend=dict(title="Metrics", orientation="h", y=1.1)
                             )
-                            st.plotly_chart(fig_cost, width="stretch")
+                            st.plotly_chart(fig_cost, use_container_width=True)
                         
                         st.markdown('</div>', unsafe_allow_html=True)
                 
@@ -665,7 +665,7 @@ with tab1:
                             paper_bgcolor="rgba(0,0,0,0)",
                             height=400
                         )
-                        st.plotly_chart(fig_funnel, width="stretch")
+                        st.plotly_chart(fig_funnel, use_container_width=True)
                     
                     with funnel_col2:
                         st.markdown("#### 📊 Funnel Metrics")
@@ -726,7 +726,7 @@ with tab1:
                                     showlegend=False,
                                     height=400
                                 )
-                                st.plotly_chart(fig_channel, width="stretch")
+                                st.plotly_chart(fig_channel, use_container_width=True)
                                 
                                 st.markdown('</div>', unsafe_allow_html=True)
                                 
@@ -734,7 +734,7 @@ with tab1:
                                 st.markdown("#### 📋 Channel Performance Data")
                                 st.dataframe(
                                     channel_df,
-                                    width="stretch",
+                                    use_container_width=True,
                                     hide_index=True
                                 )
                     except Exception as e:
@@ -857,22 +857,22 @@ with tab2:
         cols = st.columns(4)
         
         with cols[0]:
-            if st.button("🎯 Top Campaigns", key="btn-campaigns", help="Find the best performing campaigns by return on ad spend", width="stretch"):
+            if st.button("🎯 Top Campaigns", key="btn-campaigns", help="Find the best performing campaigns by return on ad spend", use_container_width=True):
                 st.session_state.suggested_question = "What are the top 5 campaigns by ROAS?"
                 st.rerun()
         
         with cols[1]:
-            if st.button("📈 Revenue Trends", key="btn-revenue", help="Visualize revenue patterns and growth over time", width="stretch"):
+            if st.button("📈 Revenue Trends", key="btn-revenue", help="Visualize revenue patterns and growth over time", use_container_width=True):
                 st.session_state.suggested_question = "Show me revenue trends over time with visualization"
                 st.rerun()
         
         with cols[2]:
-            if st.button("📊 Channel Performance", key="btn-channels", help="Analyze and compare marketing channel effectiveness", width="stretch"):
+            if st.button("📊 Channel Performance", key="btn-channels", help="Analyze and compare marketing channel effectiveness", use_container_width=True):
                 st.session_state.suggested_question = "Compare channel performance with charts"
                 st.rerun()
         
         with cols[3]:
-            if st.button("💰 Segment Analysis", key="btn-segments", help="Break down funding rates across customer segments", width="stretch"):
+            if st.button("💰 Segment Analysis", key="btn-segments", help="Break down funding rates across customer segments", use_container_width=True):
                 st.session_state.suggested_question = "Analyze funding rates by customer segment"
                 st.rerun()
     else:
@@ -914,7 +914,7 @@ with tab2:
                                 plot_bgcolor="rgba(0,0,0,0)",
                                 paper_bgcolor="rgba(0,0,0,0)"
                             )
-                            st.plotly_chart(fig, width="stretch")
+                            st.plotly_chart(fig, use_container_width=True)
                     except Exception as e:
                         st.error(f"Chart rendering error: {e}")
                 
@@ -923,7 +923,7 @@ with tab2:
                     try:
                         if "rows" in table and "columns" in table:
                             df = pd.DataFrame(table["rows"], columns=table["columns"])
-                            st.dataframe(df, width="stretch", hide_index=True)
+                            st.dataframe(df, use_container_width=True, hide_index=True)
                             
                             csv = df.to_csv(index=False)
                             st.download_button(
@@ -1008,7 +1008,7 @@ with tab2:
                                     )
                                     
                                     # Display chart
-                                    st.plotly_chart(fig, width="stretch")
+                                    st.plotly_chart(fig, use_container_width=True)
                                     
                                     # Show chart metadata if available
                                     chart_type = plot.get("chart_type", "unknown")
@@ -1048,7 +1048,7 @@ with tab2:
                             try:
                                 if "rows" in table and "columns" in table:
                                     df = pd.DataFrame(table["rows"], columns=table["columns"])
-                                    st.dataframe(df, width="stretch", hide_index=True)
+                                    st.dataframe(df, use_container_width=True, hide_index=True)
                                     
                                     csv = df.to_csv(index=False)
                                     st.download_button(
@@ -1130,7 +1130,7 @@ with tab3:
         }
         
         schema_df = pd.DataFrame(schema_data)
-        st.dataframe(schema_df, width="stretch", hide_index=True)
+        st.dataframe(schema_df, use_container_width=True, hide_index=True)
         
         # Quick data preview
         st.markdown("#### 👀 Data Preview")
@@ -1141,7 +1141,7 @@ with tab3:
                 if sample_data.get("data"):
                     sample_df = pd.DataFrame(sample_data["data"][:10])  # Show first 10 rows
                     st.markdown("**Sample Data (First 10 rows):**")
-                    st.dataframe(sample_df, width="stretch", hide_index=True)
+                    st.dataframe(sample_df, use_container_width=True, hide_index=True)
         except Exception as e:
             st.error(f"Could not load sample data: {e}")
         
@@ -1211,7 +1211,7 @@ with tab3:
                             # Direct data response
                             result_df = pd.DataFrame(result_data["data"])
                             st.success(f"Query executed successfully! Found {len(result_df)} records.")
-                            st.dataframe(result_df, width="stretch", hide_index=True)
+                            st.dataframe(result_df, use_container_width=True, hide_index=True)
                             
                             # Download button
                             csv = result_df.to_csv(index=False)
@@ -1226,7 +1226,7 @@ with tab3:
                             for table in result_data["tables"]:
                                 table_df = pd.DataFrame(table["rows"], columns=table["columns"])
                                 st.success(f"Query executed successfully! Found {len(table_df)} records.")
-                                st.dataframe(table_df, width="stretch", hide_index=True)
+                                st.dataframe(table_df, use_container_width=True, hide_index=True)
                         else:
                             st.warning("Query executed but returned unexpected format")
                             st.json(result_data)
@@ -1315,7 +1315,7 @@ with tab4:
                 try:
                     df = pd.DataFrame(table["rows"], columns=table["columns"])
                     st.markdown(f"**Table {i+1}** ({len(df)} rows)")
-                    st.dataframe(df, width="stretch", hide_index=True)
+                    st.dataframe(df, use_container_width=True, hide_index=True)
                     
                     csv = df.to_csv(index=False)
                     st.download_button(

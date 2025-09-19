@@ -23,6 +23,25 @@ print(f"AZURE_OPENAI_ENDPOINT: {os.getenv('AZURE_OPENAI_ENDPOINT', 'NOT SET')}")
 print(f"AZURE_OPENAI_DEPLOYMENT: {os.getenv('AZURE_OPENAI_DEPLOYMENT', 'NOT SET')}")
 print(f"AZURE_OPENAI_API_VERSION: {os.getenv('AZURE_OPENAI_API_VERSION', 'NOT SET')}")
 
+# Check proxy settings that might interfere
+print("\n🌐 Proxy Environment Variables:")
+proxy_vars = ['HTTP_PROXY', 'HTTPS_PROXY', 'http_proxy', 'https_proxy', 'NO_PROXY', 'no_proxy']
+for var in proxy_vars:
+    value = os.getenv(var)
+    if value:
+        print(f"{var}: {value}")
+    else:
+        print(f"{var}: ❌ NOT SET")
+
+# Check if we're in a corporate environment
+print("\n🏢 System Environment Checks:")
+if any(os.getenv(var) for var in ['HTTP_PROXY', 'HTTPS_PROXY', 'http_proxy', 'https_proxy']):
+    print("⚠️  PROXY DETECTED: You're in a proxy environment")
+    print("   This may cause Azure OpenAI connection issues")
+    print("   The application will attempt to bypass proxies for Azure domains")
+else:
+    print("✅ NO PROXY: Direct internet connection detected")
+
 print("\n🔧 Testing Configuration Loading...")
 try:
     from backend.app.config import settings, get_llm_instance
